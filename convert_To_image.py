@@ -3,23 +3,23 @@ import os
 import glob
 from pdf2image import convert_from_path
 
-user = getpass.getuser()
-input_dir_ = '/Users/' + user + '/Downloads/Forum_Pass/pdf/'
-output_dir = '/Users/' + user + '/Downloads/Forum_Pass/tables/png_of_pdf/'
+user = getpass.getuser() #For MAC users
+input_dir_ = '/Folderpath/'
+output_dir = '/Folderpath/'
 
-if os.path.isdir(output_dir)== False:
+if os.path.isdir(output_dir)== False: #Check if directory exists if not make one
     os.mkdir(output_dir)
 
-pdfs_ = glob.glob(input_dir_ + '*.pdf')
+pdfs_ = glob.glob(input_dir_ + '*.pdf') #Get all pdfs from input directory using glob.glob
 
 for pdf in sorted(pdfs_):
-    name = pdf.split('/')[-1].split('.')[0]
+    name = pdf.split('/')[-1].split('.')[0] #Split the pre and suffix
     print('Processing:' + name)
 
     try:
-        pages = convert_from_path(pdf)
+        pages = convert_from_path(pdf) #Use covert from path lib to covert pages of the pdfs into images
         for i, page in enumerate(pages):
-            page.save(output_dir + name + '_page' + str(i) + '.png', 'PNG')
+            page.save(output_dir + name + '_page' + str(i) + '.png', 'PNG')#Save the new images using the page number and pdf name
     except Exception:
         continue
 
